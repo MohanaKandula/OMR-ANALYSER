@@ -6,15 +6,14 @@ services:
       pip install --upgrade pip
       pip install -r requirements.txt
       python -c "import cv2; print('OpenCV version:', cv2.__version__)"
-    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 web_app.app:app
+    startCommand: python app.py
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: ENVIRONMENT
         value: production
       - key: MAX_CONTENT_LENGTH
-        value: "16777216"  # 16MB in bytes
+        value: "16777216"
       - key: UPLOAD_TIMEOUT
-        value: "300"       # 5 minutes
+        value: "300"
     healthCheckPath: /health
-    

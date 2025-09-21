@@ -1,4 +1,4 @@
-requirements.txt - Enhanced dependencies
+# Enhanced dependencies for OMR Evaluation System
 opencv-python-headless==4.8.1.78
 numpy==1.24.3
 Pillow==10.0.1
@@ -23,5 +23,3 @@ pytz==2023.3
 
 # Development and monitoring
 python-dotenv==1.0.0
-
----
