@@ -1,6 +1,39 @@
+# requirements.txt - Enhanced version with additional dependencies
 
-opencv-python
-numpy
-flask
-pillow
-reportlab
+# Core image processing
+opencv-python==4.8.1.78
+numpy==1.24.3
+Pillow==10.0.1
+
+# Web framework
+flask==2.3.3
+werkzeug==2.3.7
+
+# Machine learning for clustering and analysis
+scikit-learn==1.3.0
+
+# Data handling
+pandas==2.0.3
+
+# PDF generation for reports
+reportlab==4.0.4
+
+# Database handling (built-in sqlite3 is sufficient)
+
+# Image enhancement and processing
+scipy==1.11.2
+imutils==0.5.4
+
+# For image quality assessment
+imageio==2.31.3
+
+# Additional utilities
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Development and debugging
+matplotlib==3.7.2  # For visualization during development
+
+# Optional: For production deployment
+# gunicorn==21.2.0
+# python-dotenv==1.0.0

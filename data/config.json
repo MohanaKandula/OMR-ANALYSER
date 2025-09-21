@@ -1,15 +1,21 @@
 {
     "sheet_geometry": {
         "width": 800,
-        "height": 1000
+        "height": 1000,
+        "margin": {
+            "top": 50,
+            "bottom": 50,
+            "left": 50,
+            "right": 50
+        }
     },
     "layout": {
         "subjects": [
-            {"name": "subject_1", "start": 1, "end": 20},
-            {"name": "subject_2", "start": 21, "end": 40},
-            {"name": "subject_3", "start": 41, "end": 60},
-            {"name": "subject_4", "start": 61, "end": 80},
-            {"name": "subject_5", "start": 81, "end": 100}
+            {"name": "subject_1", "start": 1, "end": 20, "display_name": "Python"},
+            {"name": "subject_2", "start": 21, "end": 40, "display_name": "EDA"},
+            {"name": "subject_3", "start": 41, "end": 60, "display_name": "SQL"},
+            {"name": "subject_4", "start": 61, "end": 80, "display_name": "Power BI"},
+            {"name": "subject_5", "start": 81, "end": 100, "display_name": "Statistics"}
         ],
         "questions_per_subject": 20,
         "subjects_count": 5,
@@ -22,7 +28,57 @@
         "row_y_start": 100,
         "row_y_step": 36,
         "bubble_radius": 8,
-        "option_x_step": 30
+        "option_x_step": 30,
+        "detection_threshold": 0.3,
+        "min_bubble_area": 20,
+        "max_bubble_area": 200
     },
-    "sets": ["A", "B", "C", "D"]
+    "image_processing": {
+        "resize_target": {
+            "width": 800,
+            "height": 1000
+        },
+        "blur_kernel_size": 5,
+        "canny_threshold_low": 50,
+        "canny_threshold_high": 150,
+        "contour_min_area": 1000,
+        "perspective_correction": true,
+        "rotation_correction": true,
+        "max_rotation_degrees": 15,
+        "adaptive_threshold": {
+            "max_value": 255,
+            "adaptive_method": "ADAPTIVE_THRESH_GAUSSIAN_C",
+            "threshold_type": "THRESH_BINARY_INV",
+            "block_size": 11,
+            "c": 2
+        }
+    },
+    "quality_checks": {
+        "min_image_width": 400,
+        "min_image_height": 500,
+        "max_file_size_mb": 16,
+        "supported_formats": ["jpg", "jpeg", "png", "tiff", "bmp"],
+        "brightness_threshold": {
+            "min": 50,
+            "max": 200
+        },
+        "blur_detection_threshold": 100
+    },
+    "scoring": {
+        "multi_mark_penalty": true,
+        "blank_answer_penalty": false,
+        "partial_credit": false,
+        "confidence_threshold": 0.7
+    },
+    "sets": ["A", "B", "C", "D"],
+    "database": {
+        "results_retention_days": 90,
+        "auto_cleanup": true
+    },
+    "web_interface": {
+        "max_concurrent_uploads": 10,
+        "supported_cameras": true,
+        "real_time_preview": true,
+        "auto_refresh_interval": 30
+    }
 }
