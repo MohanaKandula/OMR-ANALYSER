@@ -1,0 +1,28 @@
+{
+    "sheet_geometry": {
+        "width": 800,
+        "height": 1000
+    },
+    "layout": {
+        "subjects": [
+            {"name": "subject_1", "start": 1, "end": 20},
+            {"name": "subject_2", "start": 21, "end": 40},
+            {"name": "subject_3", "start": 41, "end": 60},
+            {"name": "subject_4", "start": 61, "end": 80},
+            {"name": "subject_5", "start": 81, "end": 100}
+        ],
+        "questions_per_subject": 20,
+        "subjects_count": 5,
+        "questions_total": 100,
+        "options_per_question": 4,
+        "columns": 5
+    },
+    "bubble_grid": {
+        "column_x_offsets": [100, 250, 400, 550, 700],
+        "row_y_start": 100,
+        "row_y_step": 36,
+        "bubble_radius": 8,
+        "option_x_step": 30
+    },
+    "sets": ["A", "B", "C", "D"]
+}

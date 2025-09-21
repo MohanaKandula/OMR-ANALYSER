@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated OMR Evaluation</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #0056b3;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        form {
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="file"] {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            margin-bottom: 1rem;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 1rem;
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 12px; 
+            text-align: left; 
+        }
+        th { 
+            background-color: #0056b3; 
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .export-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            transition: background-color 0.3s;
+        }
+        .export-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Automated OMR Evaluation & Scoring System</h1>
+    </header>
+    <div class="container">
+        <h2>Upload OMR Sheets</h2>
+        <p>Select one or more OMR sheet images to upload and process.</p>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="set_id"><b>Select Set:</b></label>
+            <select name="set_id" id="set_id" required style="margin-bottom:1rem;">
+                {% for set in sets %}
+                <option value="{{ set }}">{{ set }}</option>
+                {% endfor %}
+            </select><br>
+            <input type="file" name="files[]" multiple required>
+            <input type="submit" value="Upload and Process">
+        </form>
+
+        <h2>Evaluation Results</h2>
+        <a href="/export" class="export-btn">Export as CSV</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Set</th>
+                    <th>Total Score</th>
+                    {% if results and results[0].get('subject_scores') %}
+                        {% for subj in results[0]['subject_scores'].keys() %}
+                        <th>{{ subj|capitalize }}</th>
+                        {% endfor %}
+                    {% endif %}
+                    <th>Error</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.filename }}</td>
+                    <td>{{ result.set_id }}</td>
+                    <td>{{ result.total_score }}</td>
+                    {% if result.subject_scores %}
+                        {% for score in result.subject_scores.values() %}
+                        <td>{{ score }}</td>
+                        {% endfor %}
+                    {% endif %}
+                    <td>{{ result.get('error', '') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
