@@ -1,12 +1,13 @@
 {
+    "debug_mode": false,
     "sheet_geometry": {
         "width": 800,
         "height": 1000,
         "margin": {
-            "top": 50,
-            "bottom": 50,
-            "left": 50,
-            "right": 50
+            "top": 60,
+            "bottom": 60,
+            "left": 60,
+            "right": 60
         }
     },
     "layout": {
@@ -24,61 +25,128 @@
         "columns": 5
     },
     "bubble_grid": {
-        "column_x_offsets": [100, 250, 400, 550, 700],
-        "row_y_start": 100,
-        "row_y_step": 36,
-        "bubble_radius": 8,
-        "option_x_step": 30,
-        "detection_threshold": 0.3,
-        "min_bubble_area": 20,
-        "max_bubble_area": 200
+        "column_x_offsets": [120, 280, 440, 600, 760],
+        "row_y_start": 120,
+        "row_y_step": 40,
+        "bubble_radius": 12,
+        "option_x_step": 35,
+        "detection_threshold": 0.35,
+        "multi_mark_threshold": 0.25,
+        "confidence_threshold": 0.7,
+        "min_bubble_area": 25,
+        "max_bubble_area": 300
     },
     "image_processing": {
         "resize_target": {
             "width": 800,
             "height": 1000
         },
+        "enhance_quality": true,
         "blur_kernel_size": 5,
+        "bilateral_filter": {
+            "d": 9,
+            "sigma_color": 75,
+            "sigma_space": 75
+        },
+        "clahe": {
+            "clip_limit": 3.0,
+            "tile_grid_size": [8, 8]
+        },
         "canny_threshold_low": 50,
         "canny_threshold_high": 150,
-        "contour_min_area": 1000,
+        "contour_min_area": 2000,
         "perspective_correction": true,
         "rotation_correction": true,
-        "max_rotation_degrees": 15,
+        "max_rotation_degrees": 20,
         "adaptive_threshold": {
             "max_value": 255,
             "adaptive_method": "ADAPTIVE_THRESH_GAUSSIAN_C",
             "threshold_type": "THRESH_BINARY_INV",
             "block_size": 11,
             "c": 2
+        },
+        "morphological_operations": {
+            "enabled": true,
+            "kernel_size": 3,
+            "iterations": 1
         }
     },
     "quality_checks": {
-        "min_image_width": 400,
-        "min_image_height": 500,
+        "min_image_width": 500,
+        "min_image_height": 600,
         "max_file_size_mb": 16,
-        "supported_formats": ["jpg", "jpeg", "png", "tiff", "bmp"],
+        "supported_formats": ["jpg", "jpeg", "png", "tiff", "bmp", "webp"],
         "brightness_threshold": {
-            "min": 50,
-            "max": 200
+            "min": 40,
+            "max": 220
         },
-        "blur_detection_threshold": 100
+        "blur_detection_threshold": 80,
+        "noise_threshold": 0.15,
+        "contrast_threshold": 30
+    },
+    "detection_methods": {
+        "primary_method": "adaptive_threshold",
+        "fallback_methods": ["otsu", "variance_based", "edge_density"],
+        "combination_weights": {
+            "fill_ratio": 0.4,
+            "intensity_score": 0.3,
+            "variance_score": 0.2,
+            "edge_density": 0.1
+        },
+        "circle_mask_enabled": true,
+        "circle_mask_radius_factor": 0.3
     },
     "scoring": {
         "multi_mark_penalty": true,
         "blank_answer_penalty": false,
         "partial_credit": false,
-        "confidence_threshold": 0.7
+        "confidence_weighted": false,
+        "min_confidence_for_answer": 0.3,
+        "multi_mark_detection": true
     },
     "sets": ["A", "B", "C", "D"],
     "database": {
         "results_retention_days": 90,
-        "auto_cleanup": true
+        "auto_cleanup": true,
+        "backup_enabled": false
     },
     "web_interface": {
         "max_concurrent_uploads": 10,
         "supported_cameras": true,
         "real_time_preview": true,
-        "auto_refresh_interval": 30
+        "auto_refresh_interval": 30,
+        "max_files_per_upload": 20,
+        "allowed_file_types": ["image/jpeg", "image/png", "image/tiff", "image/bmp"],
+        "camera_constraints": {
+            "width": {"ideal": 1280, "min": 640},
+            "height": {"ideal": 720, "min": 480},
+            "facing_mode": "environment"
+        }
+    },
+    "performance": {
+        "enable_parallel_processing": false,
+        "max_workers": 2,
+        "timeout_seconds": 30,
+        "memory_limit_mb": 512
+    },
+    "logging": {
+        "level": "INFO",
+        "log_to_file": false,
+        "log_file_path": "/tmp/omr_system.log",
+        "max_log_size_mb": 10,
+        "backup_count": 3
+    },
+    "validation": {
+        "enable_answer_validation": true,
+        "flag_suspicious_patterns": true,
+        "max_consecutive_same_answers": 10,
+        "min_answers_per_subject": 5
+    },
+    "export": {
+        "include_confidence_scores": true,
+        "include_processing_time": true,
+        "include_debug_info": false,
+        "csv_delimiter": ",",
+        "date_format": "%Y-%m-%d %H:%M:%S"
     }
 }
